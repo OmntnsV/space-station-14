@@ -143,3 +143,11 @@
   components:
     - type: SurveillanceCameraRouter
       subnetFrequency: SurveillanceCameraEntertainment
+
+- type: entity
+  parent: SurveillanceCameraWirelessRouterBase
+  id: SurveillanceCameraWirelessRouterSecurity
+  suffix: Security
+  components:
+  - type: SurveillanceCameraRouter
+    subnetFrequency: SurveillanceCameraSecurityBodycam

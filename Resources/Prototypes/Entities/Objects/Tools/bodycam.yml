@@ -1,0 +1,76 @@
+- type: entity
+  parent: BaseItem
+  id: SecurityBodyCamera
+  name: Security Body Camera
+  description: MP3 player sized pocket camera for security officers.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/seclite.rsi
+    layers:
+    - state: seclite
+  - type: Eye
+  - type: WirelessNetworkConnection
+    range: 300
+  - type: ActiveListener
+    range: 10
+  - type: SurveillanceCameraMicrophone
+    blacklist:
+      components:
+      - SurveillanceCamera
+      - SurveillanceCameraMonitor
+      - RadioSpeaker
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: SurveillanceCameraEntertainment #SurveillanceCameraSecurityBodycam
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    setupAvailableNetworks:
+    - SurveillanceCameraEntertainment #SurveillanceCameraSecurityBodycam
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: Item
+    sprite: Objects/Tools/seclite.rsi
+  - type: SecurityBodyCamera
+  - type: UserInterface
+    interfaces:
+    - key: enum.SurveillanceCameraSetupUiKey.Camera
+      type: SurveillanceCameraSetupBoundUi
+
+
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitWardenBodycam
+  name: warden's bodycam uniform
+  description: A formal security suit for officers complete with Nanotrasen bodycam.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
+  - type: Eye
+  - type: WirelessNetworkConnection
+    range: 300
+  - type: ActiveListener
+    range: 10
+  - type: SurveillanceCameraMicrophone
+    blacklist:
+      components:
+      - SurveillanceCamera
+      - SurveillanceCameraMonitor
+      - RadioSpeaker
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: SurveillanceCameraEntertainment
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    setupAvailableNetworks:
+    - SurveillanceCameraEntertainment
