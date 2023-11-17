@@ -461,6 +461,7 @@
       whitelist:
         components:
         - IdCard
+        - SecurityBodyCamera
     targetIdSlot:
       name: id-card-console-target-id
       ejectSound: /Audio/Machines/id_swipe.ogg

@@ -29,6 +29,43 @@
         layer:
           - TabletopMachineLayer
 
+# SECURITY VISION
+
+- type: entity
+  parent: ComputerSurveillanceWirelessCameraMonitor
+  id: ComputerTelevisionSecurity
+  name: wooden security television
+  description: Finally, some decent LAW around here...
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: SurveillanceCameraSecurity
+    transmitFrequencyId: SurveillanceCameraSecurity
+  - type: Sprite
+    drawdepth: SmallObjects
+    layers:
+    - map: ["computerLayerBody"]
+      state: television
+    - map: ["computerLayerScreen"]
+      state: detective_television
+  - type: Computer
+    board: ComputerTelevisionCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 200
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
+
 - type: entity
   parent: BaseComputer
   id: WallmountTelescreenFrame

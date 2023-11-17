@@ -5,9 +5,16 @@
   description: MP3 player sized pocket camera for security officers.
   components:
   - type: Sprite
-    sprite: Objects/Tools/seclite.rsi
+    sprite: Objects/Tools/security_body_camera.rsi
     layers:
-    - state: seclite
+    - state: unpowered
+      map: ["enum.BodyCameraVisuals.Unpowered"]
+    - state: inactive
+      map: ["enum.BodyCameraVisuals.Inactive"]
+    - state: active
+      map: ["enum.BodyCameraVisuals.Active"]
+      visible: false
+  - type: SecurityBodyCameraVisuals
   - type: Eye
   - type: WirelessNetworkConnection
     range: 300
@@ -21,11 +28,11 @@
       - RadioSpeaker
   - type: DeviceNetwork
     deviceNetId: Wireless
-    receiveFrequencyId: SurveillanceCameraEntertainment #SurveillanceCameraSecurityBodycam
-    transmitFrequencyId: SurveillanceCamera
+    receiveFrequencyId: SurveillanceCameraSecurity
+    transmitFrequencyId: SurveillanceCameraSecurity
   - type: SurveillanceCamera
     setupAvailableNetworks:
-    - SurveillanceCameraEntertainment #SurveillanceCameraSecurityBodycam
+    - SurveillanceCameraSecurityBodycam
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ContainerContainer
@@ -37,7 +44,7 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellMedium
   - type: Item
-    sprite: Objects/Tools/seclite.rsi
+    sprite: Objects/Tools/security_body_camera.rsi
   - type: SecurityBodyCamera
   - type: UserInterface
     interfaces:

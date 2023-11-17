@@ -149,5 +149,9 @@
   id: SurveillanceCameraWirelessRouterSecurity
   suffix: Security
   components:
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: SurveillanceCameraSecurity
+    transmitFrequencyId: SurveillanceCameraSecurity
   - type: SurveillanceCameraRouter
-    subnetFrequency: SurveillanceCameraSecurityBodycam
+    subnetFrequency: SurveillanceCameraSecurity

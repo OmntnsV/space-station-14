@@ -79,3 +79,20 @@
     layers:
       - state: box_security
       - state: forensic
+
+- type: entity
+  name: body cameras box
+  parent: BoxCardboard
+  id: BoxBodyCamera
+  description: A box of security body cameras.
+  components:
+  - type: Storage
+    maxTotalWeight: 10
+  - type: StorageFill
+    contents:
+    - id: SecurityBodyCamera
+      amount: 5
+  - type: Sprite
+    layers:
+    - state: box_security
+    - state: forensic

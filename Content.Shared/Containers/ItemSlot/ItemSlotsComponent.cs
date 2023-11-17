@@ -1,3 +1,5 @@
+using Content.Shared.Clothing.Components;
+using Content.Shared.Clothing.Systems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -56,7 +58,7 @@ namespace Content.Shared.Containers.ItemSlots
     ///     insert/eject sounds.
     /// </summary>
     [DataDefinition]
-    [Access(typeof(ItemSlotsSystem))]
+    [Access(typeof(ItemSlotsSystem), typeof(BodyCameraSlotSystem))]
     [Serializable, NetSerializable]
     public sealed partial class ItemSlot
     {

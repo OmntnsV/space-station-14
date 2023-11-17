@@ -6,6 +6,7 @@ using Content.Server.PowerCell;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.PowerCell.Components;
+using Robust.Client.GameObjects;
 
 namespace Content.Server.SurveillanceCamera;
 
@@ -14,6 +15,7 @@ public sealed class SecurityBodyCameraSystem : EntitySystem
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SurveillanceCameraSystem _surveillanceCameras = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -27,6 +29,7 @@ public sealed class SecurityBodyCameraSystem : EntitySystem
 
     public void OnInit(EntityUid uid, SecurityBodyCameraComponent comp, ComponentInit args)
     {
+
         if (!TryComp<SurveillanceCameraComponent>(uid, out var surComp))
             return;
 
@@ -59,6 +62,7 @@ public sealed class SecurityBodyCameraSystem : EntitySystem
             return;
 
         _surveillanceCameras.SetActive(uid, battery.CurrentCharge > comp.Wattage && !surveillanceCameraComponent.Active, surveillanceCameraComponent);
+        // _appearance.SetData(uid, comp, );
 
         var message = "Body camera is " + (surveillanceCameraComponent.Active ? "ON": "OFF");
         _popup.PopupEntity(message, args.User, args.User);
@@ -73,6 +77,7 @@ public sealed class SecurityBodyCameraSystem : EntitySystem
         if (args.Ejected)
         {
             _surveillanceCameras.SetActive(uid, false, surComp);
+            _appearance.SetData(uid, );
         }
         // else if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
         // {
