@@ -1,13 +1,9 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Security.AccessControl;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.Popups;
 using Content.Server.PowerCell;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.PowerCell.Components;
-using Content.Shared.SurveillanceCamera;
-using Robust.Client.GameObjects;
+using Content.Shared.Toggleable;
 
 namespace Content.Server.SurveillanceCamera;
 
@@ -35,7 +31,7 @@ public sealed class SecurityBodyCameraSystem : EntitySystem
             return;
 
         _surveillanceCameras.SetActive(uid, false, surComp);
-        _appearance.SetData(uid, SharedBodyCameraVisuals.Active, surComp.Active);
+        _appearance.SetData(uid, ToggleVisuals.Toggled, surComp.Active);
     }
     public override void Update(float frameTime)
     {
@@ -54,7 +50,7 @@ public sealed class SecurityBodyCameraSystem : EntitySystem
             if (!battery.TryUseCharge(cam.Wattage * frameTime))
             {
                 _surveillanceCameras.SetActive(uid, false, surComp);
-                _appearance.SetData(uid, SharedBodyCameraVisuals.Active, surComp.Active);
+                _appearance.SetData(uid, ToggleVisuals.Toggled, surComp.Active);
             }
         }
     }
@@ -67,7 +63,7 @@ public sealed class SecurityBodyCameraSystem : EntitySystem
             return;
 
         _surveillanceCameras.SetActive(uid, battery.CurrentCharge > comp.Wattage && !surComp.Active, surComp);
-        _appearance.SetData(uid, SharedBodyCameraVisuals.Active, surComp.Active);
+        _appearance.SetData(uid, ToggleVisuals.Toggled, surComp.Active);
 
         var message = "Body camera is " + (surComp.Active ? "ON": "OFF");
         _popup.PopupEntity(message, args.User, args.User);
@@ -82,7 +78,7 @@ public sealed class SecurityBodyCameraSystem : EntitySystem
         if (args.Ejected)
         {
             _surveillanceCameras.SetActive(uid, false, surComp);
-            _appearance.SetData(uid, SharedBodyCameraVisuals.Active, surComp.Active);
+            _appearance.SetData(uid, ToggleVisuals.Toggled, surComp.Active);
         }
     }
 
