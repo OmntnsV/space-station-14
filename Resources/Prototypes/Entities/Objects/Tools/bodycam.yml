@@ -11,11 +11,11 @@
     - state: active
       map: [ "active" ]
       visible: false
-  - type: Clothing
-    sprite: Objects/Tools/security_body_camera.rsi
-    quickEquip: false
-    slots:
-    - neck
+#  - type: Clothing
+#    sprite: Objects/Tools/security_body_camera.rsi
+#    quickEquip: false
+#    slots:
+#    - neck
   - type: ToggleableLightVisuals
     spriteLayer: active
     inhandVisuals:
@@ -26,6 +26,7 @@
       - state: inhand-left-active
         shader: unshaded
   - type: Item
+    heldPrefix: off
     sprite: Objects/Tools/security_body_camera.rsi
   - type: Appearance
   - type: GenericVisualizer
@@ -34,7 +35,6 @@
         enum.ToggleVisuals.Layer:
           True: { state: active }
           False: { state: unpowered }
-#  - type: SecurityBodyCameraVisual
   - type: Eye
   - type: WirelessNetworkConnection
     range: 300
@@ -53,6 +53,7 @@
   - type: SurveillanceCamera
     setupAvailableNetworks:
     - SurveillanceCameraSecurity
+    - SurveillanceCamera #Проверить работоспособность
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ContainerContainer
@@ -68,6 +69,9 @@
     interfaces:
     - key: enum.SurveillanceCameraSetupUiKey.Camera
       type: SurveillanceCameraSetupBoundUi
+  - type: Tag
+    tags:
+    - SecurityBodyCamera
 
 
 

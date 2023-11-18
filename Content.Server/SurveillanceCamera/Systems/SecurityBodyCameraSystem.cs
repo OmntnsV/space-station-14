@@ -2,6 +2,7 @@ using Content.Server.Popups;
 using Content.Server.PowerCell;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Toggleable;
 
@@ -13,6 +14,7 @@ public sealed class SecurityBodyCameraSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SurveillanceCameraSystem _surveillanceCameras = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
 
     public override void Initialize()
     {
@@ -31,7 +33,7 @@ public sealed class SecurityBodyCameraSystem : EntitySystem
             return;
 
         _surveillanceCameras.SetActive(uid, false, surComp);
-        _appearance.SetData(uid, ToggleVisuals.Toggled, surComp.Active);
+        AppearanceChange(uid, surComp.Active);
     }
     public override void Update(float frameTime)
     {
@@ -50,7 +52,7 @@ public sealed class SecurityBodyCameraSystem : EntitySystem
             if (!battery.TryUseCharge(cam.Wattage * frameTime))
             {
                 _surveillanceCameras.SetActive(uid, false, surComp);
-                _appearance.SetData(uid, ToggleVisuals.Toggled, surComp.Active);
+                AppearanceChange(uid, surComp.Active);
             }
         }
     }
@@ -63,7 +65,7 @@ public sealed class SecurityBodyCameraSystem : EntitySystem
             return;
 
         _surveillanceCameras.SetActive(uid, battery.CurrentCharge > comp.Wattage && !surComp.Active, surComp);
-        _appearance.SetData(uid, ToggleVisuals.Toggled, surComp.Active);
+        AppearanceChange(uid, surComp.Active);
 
         var message = "Body camera is " + (surComp.Active ? "ON": "OFF");
         _popup.PopupEntity(message, args.User, args.User);
@@ -78,7 +80,7 @@ public sealed class SecurityBodyCameraSystem : EntitySystem
         if (args.Ejected)
         {
             _surveillanceCameras.SetActive(uid, false, surComp);
-            _appearance.SetData(uid, ToggleVisuals.Toggled, surComp.Active);
+            AppearanceChange(uid, surComp.Active);
         }
     }
 
@@ -92,6 +94,16 @@ public sealed class SecurityBodyCameraSystem : EntitySystem
             var message = "Body camera is " +  (surComp.Active ? "ON!" : "OFF!");
             args.PushMarkup(message);
         }
+    }
+
+    public void AppearanceChange(EntityUid uid, Boolean isActive)
+    {
+        if (TryComp<AppearanceComponent>(uid, out var appearance) &&
+            TryComp<ItemComponent>(uid, out var item))
+    {
+        _item.SetHeldPrefix(uid, isActive ? "on" : "off", item);
+        _appearance.SetData(uid, ToggleVisuals.Toggled, isActive, appearance);
+    }
     }
 }
 

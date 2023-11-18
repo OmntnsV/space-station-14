@@ -27,6 +27,29 @@
     tags:
     - ClothMade
     - WhitelistChameleon
+  - type: BodyCameraSlot
+    CameraSlot:
+      name: jumpsuit-camera-slot
+      swap: true
+      ejectOnBreak: true
+      whitelist:
+        tags:
+        - SecurityBodyCamera
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      jumpsuit-camera: !type:ContainerSlot
+        whitelist:
+          components:
+          - SecurityBodyCamera
+  - type: ItemMapper
+    mapLayers:
+      camera:
+        whitelist:
+          components:
+          - SecurityBodyCamera
+    sprite: Clothing/Belt/uniform_overlay.rsi
+  - type: Appearance
 
 - type: entity
   abstract: true
