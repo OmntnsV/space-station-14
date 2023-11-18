@@ -8,18 +8,19 @@
     sprite: Objects/Tools/security_body_camera.rsi
     layers:
     - state: unpowered
-      map: ["enum.BodyCameraVisuals.Unpowered"]
-    - state: inactive
-      map: ["enum.BodyCameraVisuals.Inactive"]
-    - state: active
-      map: ["enum.BodyCameraVisuals.Active"]
-      visible: false
-  - type: SecurityBodyCameraVisuals
+  - type: SecurityBodyCameraVisual
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SharedBodyCameraVisuals.Active:
+        enabled:
+          True: { state: active }
+          False: { state: unpowered }
   - type: Eye
   - type: WirelessNetworkConnection
     range: 300
   - type: ActiveListener
-    range: 10
+    range: 5
   - type: SurveillanceCameraMicrophone
     blacklist:
       components:
@@ -50,6 +51,11 @@
     interfaces:
     - key: enum.SurveillanceCameraSetupUiKey.Camera
       type: SurveillanceCameraSetupBoundUi
+  - type: Clothing
+    sprite: Objects/Tools/security_body_camera.rsi
+    quickEquip: false
+    slots:
+    - neck
 
 
 

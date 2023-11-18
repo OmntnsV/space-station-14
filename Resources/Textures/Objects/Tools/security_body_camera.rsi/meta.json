@@ -8,7 +8,7 @@
  },
  "states" : [
     {
-        "name" : "Unpowered"
+        "name" : "unpowered"
     },
     {
         "name" : "active"
@@ -23,6 +23,10 @@
     {
         "name" : "inhand-left",
         "directions" : 4
-    }
+    },
+    {
+        "name": "equipped-NECK",
+        "directions": 1
+      }
  ]
 }

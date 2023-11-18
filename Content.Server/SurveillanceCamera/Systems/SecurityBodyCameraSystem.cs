@@ -6,6 +6,7 @@ using Content.Server.PowerCell;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.PowerCell.Components;
+using Content.Shared.SurveillanceCamera;
 using Robust.Client.GameObjects;
 
 namespace Content.Server.SurveillanceCamera;
@@ -34,6 +35,7 @@ public sealed class SecurityBodyCameraSystem : EntitySystem
             return;
 
         _surveillanceCameras.SetActive(uid, false, surComp);
+        _appearance.SetData(uid, SharedBodyCameraVisuals.Active, surComp.Active);
     }
     public override void Update(float frameTime)
     {
@@ -50,21 +52,24 @@ public sealed class SecurityBodyCameraSystem : EntitySystem
                 continue;
 
             if (!battery.TryUseCharge(cam.Wattage * frameTime))
+            {
                 _surveillanceCameras.SetActive(uid, false, surComp);
+                _appearance.SetData(uid, SharedBodyCameraVisuals.Active, surComp.Active);
+            }
         }
     }
     public void OnActivate(EntityUid uid, SecurityBodyCameraComponent comp, ActivateInWorldEvent args)
     {
-        if (!TryComp<SurveillanceCameraComponent>(uid, out var surveillanceCameraComponent))
+        if (!TryComp<SurveillanceCameraComponent>(uid, out var surComp))
             return;
 
         if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery))
             return;
 
-        _surveillanceCameras.SetActive(uid, battery.CurrentCharge > comp.Wattage && !surveillanceCameraComponent.Active, surveillanceCameraComponent);
-        // _appearance.SetData(uid, comp, );
+        _surveillanceCameras.SetActive(uid, battery.CurrentCharge > comp.Wattage && !surComp.Active, surComp);
+        _appearance.SetData(uid, SharedBodyCameraVisuals.Active, surComp.Active);
 
-        var message = "Body camera is " + (surveillanceCameraComponent.Active ? "ON": "OFF");
+        var message = "Body camera is " + (surComp.Active ? "ON": "OFF");
         _popup.PopupEntity(message, args.User, args.User);
         args.Handled = true;
     }
@@ -77,12 +82,8 @@ public sealed class SecurityBodyCameraSystem : EntitySystem
         if (args.Ejected)
         {
             _surveillanceCameras.SetActive(uid, false, surComp);
-            _appearance.SetData(uid, );
+            _appearance.SetData(uid, SharedBodyCameraVisuals.Active, surComp.Active);
         }
-        // else if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
-        // {
-        //     _surveillanceCameras.SetActive(uid, battery.CurrentCharge > comp.Wattage, surComp);
-        // }
     }
 
     public void OnExamine(EntityUid uid, SecurityBodyCameraComponent comp, ExaminedEvent args)
@@ -97,3 +98,5 @@ public sealed class SecurityBodyCameraSystem : EntitySystem
         }
     }
 }
+
+// TODO: LOCALIZATION
